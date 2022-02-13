@@ -1,0 +1,1 @@
+export {signUpAuth} from './UserFireBaseServices';
