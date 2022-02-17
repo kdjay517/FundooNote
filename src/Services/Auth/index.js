@@ -1,1 +1,1 @@
-export {signUpAuth} from './UserFireBaseServices';
+export {signUpAuth, SignInAuth, getData} from './Authentication';

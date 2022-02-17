@@ -4,6 +4,7 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
 import Navigation from './src/navigation';
+import {AuthContext} from './src/navigation/AuthContext';
 const App = () => {
   return <Navigation />;
 };

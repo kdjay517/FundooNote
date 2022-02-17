@@ -1,24 +1,38 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {TextInput} from 'react-native-paper';
 import CustomButton from '../../components/CustomButton';
+import {SignIn} from '../../Services/Auth/IAuthentication';
+import {AuthContext} from '../../navigation/AuthContext';
 
-const SignInScreen = () => {
+const SignInScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [passwordVisibility, setpasswordVisibility] = useState(true);
 
-  const navigation = useNavigation();
+  const {setToken} = useContext(AuthContext);
 
-  const onSignInPressed = () => {
-    if (email === '' || password === '') {
+  const setTokenValue = uid => {
+    setToken(uid);
+  };
+
+  const homeScreen = () => {
+    navigation.navigate('HomeScreen');
+  };
+
+  const onSignInPressed = async () => {
+    if (email === '' && password === '') {
       setEmailError('*required');
       setPasswordError('*required');
+    } else if (email !== '' && password === '') {
+      setPasswordError('*required');
+    } else if (email === '' && password !== '') {
+      setEmailError('*required');
+    } else if (!(emailError !== '' || passwordError !== '')) {
+      await SignIn(email, password, setTokenValue);
     }
-    alert('hi');
   };
   const EmailValidation = () => {
     const emailPattern = new RegExp(

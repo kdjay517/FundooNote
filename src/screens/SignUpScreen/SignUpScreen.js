@@ -3,8 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
 import {TextInput} from 'react-native-paper';
-import {signUp} from '../../Services/Auth/UserServices';
-
+import {signUp} from '../../Services/Auth/IAuthentication';
 const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -16,6 +15,7 @@ const SignUpScreen = () => {
   const [emailError, setEmailError] = useState('');
   const [errorUser, setErrorUser] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [confirm_pass_error, setconfirm_pass_error] = useState('');
   const navigation = useNavigation();
 
   const UserValidation = () => {
@@ -24,7 +24,7 @@ const SignUpScreen = () => {
       setErrorUser('*required');
     }
     if (!userPattern.test(userName)) {
-      setErrorUser('invalid user name');
+      setErrorUser('invalid user ');
     }
     if (userPattern.test(userName)) {
       setErrorUser('');
@@ -37,7 +37,7 @@ const SignUpScreen = () => {
     if (email === '') {
       setEmailError('*required');
     } else if (!emailPattern.test(email)) {
-      setEmailError('invalid Email');
+      setEmailError('invalid email');
     }
     if (emailPattern.test(email)) {
       setEmailError('');
@@ -59,6 +59,15 @@ const SignUpScreen = () => {
     }
   };
 
+  const confirmpasswordValidation = () => {
+    if (password === confirmPassword) {
+      setconfirm_pass_error('');
+    }
+    if (password !== confirmPassword) {
+      setconfirm_pass_error('password mismatch');
+    }
+  };
+
   const onSignInPress = () => {
     setEmail('');
     setUserName('');
@@ -75,16 +84,48 @@ const SignUpScreen = () => {
   };
   const onSignUpPress = () => {
     if (
-      email === '' ||
-      userName === '' ||
-      password === '' ||
+      email === '' &&
+      userName === '' &&
+      password === '' &&
       confirmPassword === ''
     ) {
       setErrorUser('*required');
       setEmailError('*required');
       setPasswordError('*required');
-    } else {
-      signUp(email, password, signInScreen);
+      setconfirm_pass_error('*required');
+    } else if (
+      email !== '' &&
+      userName === '' &&
+      password === '' &&
+      confirmPassword === ''
+    ) {
+      setEmailError('*required');
+      setPasswordError('*required');
+      setconfirm_pass_error('*required');
+    } else if (
+      email !== '' &&
+      userName !== '' &&
+      password === '' &&
+      confirmPassword === ''
+    ) {
+      setPasswordError('*required');
+      setconfirm_pass_error('*required');
+    } else if (
+      email !== '' &&
+      userName !== '' &&
+      password !== '' &&
+      confirmPassword === ''
+    ) {
+      setconfirm_pass_error('*required');
+    } else if (
+      !(
+        errorUser !== '' ||
+        emailError !== '' ||
+        passwordError !== '' ||
+        confirm_pass_error !== ''
+      )
+    ) {
+      signUp(userName, email, password, signInScreen);
     }
   };
 
@@ -141,7 +182,7 @@ const SignUpScreen = () => {
           placeholder="Enter Confirm Password"
           secureTextEntry={confimpasswordVisibility}
           onChangeText={text => setConfirmPassword(text)}
-          //onBlur={validateConfimPasswordlOnBlur}
+          onBlur={confirmpasswordValidation}
           right={
             <TextInput.Icon
               name={
@@ -153,7 +194,7 @@ const SignUpScreen = () => {
             />
           }
         />
-        <Text style={{color: 'red'}}>{passwordError}</Text>
+        <Text style={{color: 'red'}}>{confirm_pass_error}</Text>
         <CustomButton text1="Sign Up" onPress={onSignUpPress} />
 
         <CustomButton
