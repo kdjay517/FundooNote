@@ -1,1 +1,0 @@
-export {handleUserData} from './DataManipulation';

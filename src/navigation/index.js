@@ -1,15 +1,16 @@
 import React, {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import NewPasswordScreen from '../screens/NewPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
 import {AuthProvider} from './AuthContext';
-import {Text} from 'react-native';
+import DrawerNavigation from './DrawerNavigation';
+import 'react-native-gesture-handler';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const Navigation = () => {
   return (
@@ -19,7 +20,11 @@ const Navigation = () => {
           <Stack.Navigator screenOptions={{headerShown: false}}>
             {token ? (
               <>
-                <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
+                <Stack.Screen
+                  name="DrawerNavigation"
+                  component={DrawerNavigation}
+                />
               </>
             ) : (
               <>
