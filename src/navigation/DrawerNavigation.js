@@ -8,7 +8,6 @@ import SettingsScreen from '../screens/SettingsScreen';
 import TrashScreen from '../screens/TrashScreen';
 import DrawerContent from '../components/DrawerContent';
 const Drawer = createDrawerNavigator();
-
 const DrawerNavigation = () => {
   return (
     <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
@@ -21,5 +20,4 @@ const DrawerNavigation = () => {
     </Drawer.Navigator>
   );
 };
-
 export default DrawerNavigation;

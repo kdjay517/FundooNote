@@ -5,7 +5,6 @@ import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import NewPasswordScreen from '../screens/NewPasswordScreen';
-import HomeScreen from '../screens/HomeScreen';
 import {AuthProvider} from './AuthContext';
 import DrawerNavigation from './DrawerNavigation';
 import 'react-native-gesture-handler';
@@ -21,6 +20,7 @@ const Navigation = () => {
             {token ? (
               <>
                 {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
+                {/* <Stack.Screen name="Tabs" component={Tabs} /> */}
                 <Stack.Screen
                   name="DrawerNavigation"
                   component={DrawerNavigation}

@@ -5,6 +5,8 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
 import Navigation from './src/navigation';
 import {AuthContext} from './src/navigation/AuthContext';
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
 const App = () => {
   return <Navigation />;
 };
