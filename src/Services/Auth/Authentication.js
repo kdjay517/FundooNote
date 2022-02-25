@@ -9,8 +9,6 @@ export const signUpAuth = async (userName, email, password) => {
       email,
       password,
     );
-
-    console.log(userName, email, response.user);
     await ref.doc(response.user.uid).set({
       userName: userName,
       email: email,

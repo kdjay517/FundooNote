@@ -1,29 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useContext, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import React, {useContext} from 'react';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {AuthContext} from '../../navigation/AuthContext';
-import Feather from 'react-native-vector-icons/Feather';
-import {Avatar, Modal} from 'react-native-paper';
+import {Avatar} from 'react-native-paper';
 import {launchImageLibrary} from 'react-native-image-picker';
-import BottomBar from '../../components/BottomBar/BottomBar';
-import {
-  heightPercentage,
-  widthPercentage,
-} from '../../utility/DynamicDimensions';
+import {firebase} from '@react-native-firebase/firestore';
 
-const ImagePicker = ({onPress, modal}) => {
-  const {imageUri, setImageUri} = useContext(AuthContext);
-
-  const handleSignOut = async () => {
-    await AsyncStorage.removeItem('key');
-    setToken(null);
-  };
+const ref = firebase.firestore().collection('UserDetails');
+const ImagePicker = ({onPress, toggle, size}) => {
+  const {imageUri, setImageUri, user} = useContext(AuthContext);
 
   const openGallery = async () => {
     const options = {
@@ -35,7 +20,6 @@ const ImagePicker = ({onPress, modal}) => {
     };
 
     const response = await launchImageLibrary(options);
-
     if (response.assets) {
       const source = {
         uri: 'data: image/jpeg;base64,' + response.assets[0].base64,
@@ -46,20 +30,33 @@ const ImagePicker = ({onPress, modal}) => {
       } catch (e) {
         console.error(e);
       }
+      try {
+        await ref.doc(user).update({
+          imagePath: source,
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   return (
     <View>
       <View style={{paddingHorizontal: 20}}>
-        <TouchableOpacity onPress={onPress}>
-          <Avatar.Image size={28} source={imageUri} />
-        </TouchableOpacity>
+        {toggle ? (
+          <TouchableOpacity onPress={onPress}>
+            <Avatar.Image size={size} source={imageUri} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={openGallery}>
+              <Avatar.Image size={size} source={imageUri} />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
 };
 
 export default ImagePicker;
-
-const styles = StyleSheet.create({});

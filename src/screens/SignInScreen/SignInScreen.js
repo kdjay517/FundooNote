@@ -12,10 +12,10 @@ const SignInScreen = ({navigation}) => {
   const [passwordError, setPasswordError] = useState('');
   const [passwordVisibility, setpasswordVisibility] = useState(true);
 
-  const {setToken} = useContext(AuthContext);
+  const {setUser} = useContext(AuthContext);
 
-  const setTokenValue = uid => {
-    setToken(uid);
+  const setUserValue = uid => {
+    setUser(uid);
   };
 
   const homeScreen = () => {
@@ -31,7 +31,7 @@ const SignInScreen = ({navigation}) => {
     } else if (email === '' && password !== '') {
       setEmailError('*required');
     } else if (!(emailError !== '' || passwordError !== '')) {
-      await SignIn(email, password, setTokenValue);
+      await SignIn(email, password, setUserValue);
     }
   };
   const EmailValidation = () => {
@@ -135,7 +135,7 @@ const SignInScreen = ({navigation}) => {
     </ScrollView>
   );
 };
-
+export default SignInScreen;
 const styles = StyleSheet.create({
   headerView: {
     alignItems: 'center',
@@ -153,5 +153,3 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
 });
-
-export default SignInScreen;

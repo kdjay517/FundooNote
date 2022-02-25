@@ -31,6 +31,7 @@ const BottomBar = () => {
           <Image source={require('../../../assets/gallery.png')} />
         </TouchableOpacity>
       </View>
+      <View></View>
     </SafeAreaView>
   );
 };

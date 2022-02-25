@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignInScreen from '../screens/SignInScreen';
@@ -14,10 +14,10 @@ const Stack = createStackNavigator();
 const Navigation = () => {
   return (
     <AuthProvider>
-      {token => (
+      {user => (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-            {token ? (
+            {user ? (
               <>
                 {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
                 {/* <Stack.Screen name="Tabs" component={Tabs} /> */}

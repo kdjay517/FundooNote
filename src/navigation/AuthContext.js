@@ -1,38 +1,31 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useState, useEffect} from 'react';
+import {firebase} from '@react-native-firebase/firestore';
 
 const AuthContext = createContext({});
+const ref = firebase.firestore().collection('UserDetails');
 const AuthProvider = ({children}) => {
-  const [token, setToken] = useState(null);
-  const [imageUri, setImageUri] = useState({});
-  const [modal, setModal] = useState(false);
-
-  const getKey = async () => {
+  const [user, setUser] = useState(null);
+  const fetching = async () => {
     try {
       const value = await AsyncStorage.getItem('key');
-      setToken(value);
-      const imgPath = JSON.parse(await AsyncStorage.getItem('image'));
-      setImageUri(imgPath);
+      setUser(value);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    getKey();
+    fetching();
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        token,
-        setToken,
-        imageUri,
-        setImageUri,
-        modal,
-        setModal,
+        user,
+        setUser,
       }}>
-      {children(token, imageUri, modal)}
+      {children(user)}
     </AuthContext.Provider>
   );
 };
