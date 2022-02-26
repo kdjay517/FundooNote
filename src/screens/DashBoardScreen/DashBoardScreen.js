@@ -20,13 +20,13 @@ import ImagePicker from '../../components/ImagePicker/ImagePicker';
 import ProfileModal from '../../components/Mode/ProfileModal';
 import Header from './Header';
 
-const DashBoardScreen = () => {
+const DashBoardScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.header}>
       <View style={styles.container}>
-        <Header />
+        <Header navigation={navigation} />
       </View>
-      <BottomBar />
+      <BottomBar navigation={navigation} />
     </SafeAreaView>
   );
 };

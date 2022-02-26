@@ -6,10 +6,10 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 import Profile from './Profile';
-const Header = () => {
+const Header = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Feather name="menu" size={24} />
       </TouchableOpacity>
       <Text>Search yours notes</Text>

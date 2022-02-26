@@ -6,47 +6,46 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 
-const BottomBar = () => {
+const BottomBar = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.header}>
-      <View style={styles.image}>
+    <>
+      <View style={styles.container}>
         <TouchableOpacity>
           <Image
             source={require('../../../assets/icons8-checked-checkbox-24.png')}
           />
         </TouchableOpacity>
-      </View>
-      <View style={styles.image}>
+
         <TouchableOpacity>
           <Image source={require('../../../assets/brush.png')} />
         </TouchableOpacity>
-      </View>
-      <View style={styles.image}>
+
         <TouchableOpacity>
           <Image source={require('../../../assets/icons8-microphone-24.png')} />
         </TouchableOpacity>
-      </View>
-      <View style={styles.image}>
+
         <TouchableOpacity>
           <Image source={require('../../../assets/gallery.png')} />
         </TouchableOpacity>
+
+        <View style={styles.plusicon}>
+          <TouchableOpacity onPress={() => navigation.navigate('NotesScreen')}>
+            <Image source={require('../../../assets/plus.png')} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View></View>
-    </SafeAreaView>
+    </>
   );
 };
 
 export default BottomBar;
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
+  container: {
     backgroundColor: '#E8F1F3',
-    paddingBottom: heightPercentage('4%'),
-    paddingTop: heightPercentage('3%'),
+    padding: heightPercentage('3%'),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  image: {
-    paddingLeft: widthPercentage('5%'),
-    alignItems: 'center',
-  },
+  plusicon: {paddingLeft: widthPercentage('25%')},
 });
