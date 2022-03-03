@@ -91,6 +91,7 @@ const Profile = () => {
       }
     }
     setgallaryVisible(!gallaryVisible);
+    fetchUserDetails();
   };
 
   return (

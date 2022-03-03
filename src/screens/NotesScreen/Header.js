@@ -6,7 +6,7 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 
-const Header = () => {
+const Header = ({onBackPress}) => {
   return (
     <>
       <View
@@ -19,7 +19,7 @@ const Header = () => {
           <IconButton
             icon={'keyboard-backspace'}
             size={24}
-            onPress={() => alert('hi')}
+            onPress={() => onBackPress()}
           />
         </View>
         <View style={{flexDirection: 'row'}}>
@@ -28,13 +28,11 @@ const Header = () => {
             size={24}
             onPress={() => alert('hi')}
           />
-
           <IconButton
             icon={'bell-outline'}
             size={24}
             onPress={() => alert('hi')}
           />
-
           <IconButton icon={'archive'} size={24} onPress={() => alert('hi')} />
         </View>
       </View>

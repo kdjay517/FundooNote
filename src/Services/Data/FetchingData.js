@@ -1,27 +1,30 @@
-// import React, {useEffect} from 'react';
-// import {} from 'react-native';
-// import {firebase} from '@react-native-firebase/firestore';
-// import {useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import {AuthContext} from '../../navigation/AuthContext';
 
-// const ref = firebase.firestore().collection('UserDetails');
+const ref = firestore().collection('UserNotes');
 
-// const FetchingData = async () => {
-//   const [blogs, setBlogs] = useState([]);
+const FetchingData = () => {
+  const [noteList, setNoteList] = useState({});
+  const {user} = useContext(AuthContext);
 
-//   const fetching = () => {
-//     try {
-//       const data = await ref.get();
-//       data.docs.forEach(item => {
-//         setBlogs([...blogs, item.data()]);
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  const fetchingNote = async () => {
+    let array = [];
+    try {
+      const list = await ref.doc(user).collection('Notes').get();
 
-//   console.log(blogs);
+      list.forEach(doc => {
+        let data = doc.data();
+        data.key = doc.id;
+        array.push(data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setNoteList(array);
+  };
+  return {fetchingNote, noteList};
+};
 
-//   useEffect(() => {
-//     fetching();
-//   }, []);
-// };
+export default FetchingData;

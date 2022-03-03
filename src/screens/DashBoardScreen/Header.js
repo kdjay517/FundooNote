@@ -8,16 +8,18 @@ import {
 import Profile from './Profile';
 const Header = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <Feather name="menu" size={24} />
-      </TouchableOpacity>
-      <Text>Search yours notes</Text>
-      <TouchableOpacity>
-        <Feather name="grid" size={24} />
-      </TouchableOpacity>
-      <Profile />
-    </View>
+    <>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Feather name="menu" size={24} />
+        </TouchableOpacity>
+        <Text>Search yours notes</Text>
+        <TouchableOpacity>
+          <Feather name="grid" size={24} />
+        </TouchableOpacity>
+        <Profile />
+      </View>
+    </>
   );
 };
 
