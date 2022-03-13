@@ -16,7 +16,6 @@ const Notes = props => {
         }}
         blurOnSubmit={false}
         onChangeText={title => {
-          props.setVisible(true);
           props.setTitle(title);
         }}
       />
@@ -28,7 +27,6 @@ const Notes = props => {
         ref={noteRef}
         multiline={true}
         onChangeText={note => {
-          props.setVisible(true);
           props.setNote(note);
         }}
       />

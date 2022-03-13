@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -6,17 +6,23 @@ import BellIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PlusIcon from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
+import LabelsData from '../../Services/Data/LabelsData';
+import LabelsList from './LabelsList';
+import {
+  heightPercentage,
+  widthPercentage,
+} from '../../utility/DynamicDimensions';
+const DrawerContent = ({props}) => {
+  const {fetchLabel, labelsList} = LabelsData();
 
-const DrawerContent = props => {
+  useEffect(() => {
+    fetchLabel();
+  }, []);
+
   return (
     <View style={{flex: 1}}>
-      <DrawerContentScrollView {...props}>
-        <View
-          style={{
-            paddingTop: '20%',
-            paddingHorizontal: 30,
-            flexDirection: 'row',
-          }}>
+      <DrawerContentScrollView props={props} labelsList={labelsList}>
+        <View style={styles.title}>
           <Text style={{fontSize: 28, color: 'blue'}}>F</Text>
           <Text style={{fontSize: 28, color: 'red'}}>u</Text>
           <Text style={{fontSize: 28, color: 'yellow'}}>n</Text>
@@ -32,7 +38,7 @@ const DrawerContent = props => {
             <Icon name="lightbulb-outline" color={color} size={size} />
           )}
           onPress={() => {
-            props.navigation.navigate('HomeScreen');
+            props.navigation.navigate('DashBoardScreen');
           }}
           activeTintColor="blue"
         />
@@ -45,15 +51,31 @@ const DrawerContent = props => {
             props.navigation.navigate('AddRemainderScreen');
           }}
         />
-        <DrawerItem
-          icon={({color, size}) => (
-            <PlusIcon name="plus" color={color} size={size} />
-          )}
-          label="Create new label"
-          onPress={() => {
-            props.navigation.navigate('AddRemainderScreen');
-          }}
-        />
+
+        <View style={styles.margins}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              margin: 25,
+            }}>
+            <Text>Label</Text>
+            <Text>Edit</Text>
+          </View>
+          <View>
+            <LabelsList labelsList={labelsList} />
+          </View>
+
+          <DrawerItem
+            icon={({color, size}) => (
+              <PlusIcon name="plus" color={color} size={size} />
+            )}
+            label="Create new label"
+            onPress={() => {
+              props.navigation.navigate('NewLableScreen');
+            }}
+          />
+        </View>
         <DrawerItem
           icon={({color, size}) => (
             <Ionicons name="archive-outline" color={color} size={size} />
@@ -87,3 +109,17 @@ const DrawerContent = props => {
 };
 
 export default DrawerContent;
+
+const styles = StyleSheet.create({
+  margins: {
+    borderBottomColor: 'blue',
+    borderBottomWidth: 1,
+    borderTopColor: 'blue',
+    borderTopWidth: 1,
+  },
+  title: {
+    paddingTop: heightPercentage('5%'),
+    paddingHorizontal: widthPercentage('10%'),
+    flexDirection: 'row',
+  },
+});

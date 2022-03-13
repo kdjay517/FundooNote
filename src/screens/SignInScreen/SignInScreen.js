@@ -99,10 +99,9 @@ const SignInScreen = ({navigation}) => {
           label="Password"
           value={password}
           mode="outlined"
-          onChangeText={text => setText(text)}
+          onChangeText={text => setPassword(text)}
           placeholder="Enter Password"
           secureTextEntry={passwordVisibility}
-          onChangeText={text => setPassword(text)}
           onBlur={PasswordValidation}
           right={
             <TextInput.Icon

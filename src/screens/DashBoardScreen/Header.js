@@ -1,23 +1,54 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
+import {IconButton} from 'react-native-paper';
 import Profile from './Profile';
-const Header = ({navigation}) => {
+import LabelsData from '../../Services/Data/LabelsData';
+import {useSelector, useDispatch} from 'react-redux';
+import {setGridView} from '../../Services/Redux/Actions';
+import userReducer from '../../Services/Redux/Reducers';
+
+const Header = ({navigation, states}) => {
+  const {fetchLabel, labelsList} = LabelsData();
+  const {gridView} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
+  const handleSearchNote = () => {
+    navigation.navigate('SearchNotesScreen');
+  };
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Feather name="menu" size={24} />
-        </TouchableOpacity>
-        <Text>Search yours notes</Text>
-        <TouchableOpacity>
-          <Feather name="grid" size={24} />
-        </TouchableOpacity>
-        <Profile />
+        <View style={styles.left}>
+          <TouchableOpacity
+            onPress={() => {
+              fetchLabel();
+              navigation.openDrawer();
+            }}>
+            <Feather name="menu" size={24} />
+          </TouchableOpacity>
+          <View style={styles.leftspace}>
+            <TouchableOpacity onPress={handleSearchNote}>
+              <Text>Search yours notes</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.right}>
+          <View style={styles.rightspace}>
+            <TouchableOpacity onPress={() => dispatch(setGridView(!gridView))}>
+              {gridView ? (
+                <Image source={require('../../../assets/equal.png')} />
+              ) : (
+                <Feather name="grid" size={24} />
+              )}
+            </TouchableOpacity>
+          </View>
+          <Profile />
+        </View>
       </View>
     </>
   );
@@ -35,6 +66,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: heightPercentage('1.5%'),
     paddingHorizontal: widthPercentage('8%'),
+
     justifyContent: 'space-between',
+  },
+  left: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  right: {
+    flexDirection: 'row',
+  },
+  leftspace: {
+    paddingLeft: widthPercentage('5%'),
+  },
+  rightspace: {
+    paddingRight: widthPercentage('5%'),
   },
 });

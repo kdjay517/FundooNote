@@ -7,43 +7,56 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import NewPasswordScreen from '../screens/NewPasswordScreen';
 import {AuthProvider} from './AuthContext';
 import DrawerNavigation from './DrawerNavigation';
+import NotesScreen from '../screens/NotesScreen';
+import DashBoardScreen from '../screens/DashBoardScreen';
+import SearchNotesScreen from '../screens/SearchNotesScreen/SearchNotesScreen';
 import 'react-native-gesture-handler';
+import {Provider} from 'react-redux';
+import {Store} from '../Services/Redux/Store';
 
 const Stack = createStackNavigator();
-
 const Navigation = () => {
   return (
-    <AuthProvider>
-      {user => (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            {user ? (
-              <>
-                {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
-                {/* <Stack.Screen name="Tabs" component={Tabs} /> */}
-                <Stack.Screen
-                  name="DrawerNavigation"
-                  component={DrawerNavigation}
-                />
-              </>
-            ) : (
-              <>
-                <Stack.Screen name="SignIn" component={SignInScreen} />
-                <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen
-                  name="ForgotPassword"
-                  component={ForgotPasswordScreen}
-                />
-                <Stack.Screen
-                  name="NewPassword"
-                  component={NewPasswordScreen}
-                />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      )}
-    </AuthProvider>
+    <Provider store={Store}>
+      <AuthProvider>
+        {user => (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              {user ? (
+                <>
+                  <Stack.Screen
+                    name="DrawerNavigation"
+                    component={DrawerNavigation}
+                  />
+                  {/* <Stack.Screen
+                  name="DashBoardScreen"
+                  component={DashBoardScreen}
+                /> */}
+                  <Stack.Screen
+                    name="SearchNotesScreen"
+                    component={SearchNotesScreen}
+                  />
+                  <Stack.Screen name="NotesScreen" component={NotesScreen} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen name="SignIn" component={SignInScreen} />
+                  <Stack.Screen name="SignUp" component={SignUpScreen} />
+                  <Stack.Screen
+                    name="ForgotPassword"
+                    component={ForgotPasswordScreen}
+                  />
+                  <Stack.Screen
+                    name="NewPassword"
+                    component={NewPasswordScreen}
+                  />
+                </>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        )}
+      </AuthProvider>
+    </Provider>
   );
 };
 

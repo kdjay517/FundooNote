@@ -9,6 +9,7 @@ import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
 import DashBoardScreen from './src/screens/DashBoardScreen';
 import {Provider} from 'react-native-paper';
+
 const App = () => {
   return (
     <Provider>

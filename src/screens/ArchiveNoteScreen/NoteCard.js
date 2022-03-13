@@ -4,19 +4,23 @@ import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
-const Note = ({navigation, title, note}) => {
+
+const NoteCard = ({navigation, item, states}) => {
   return (
     <TouchableOpacity
-      style={{flex: 1}}
-      onPress={() => navigation.navigate('NotesScreen')}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.note}>{note}</Text>
+      onPress={() => navigation.navigate('NotesScreen', {...item})}>
+      <View
+        style={[
+          {width: states.icon ? widthPercentage('40%') : null},
+          styles.container,
+        ]}>
+        <Text style={styles.title}>{item.Title}</Text>
+        <Text style={styles.note}>{item.Note}</Text>
       </View>
     </TouchableOpacity>
   );
 };
-export default Note;
+export default NoteCard;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +30,6 @@ const styles = StyleSheet.create({
     padding: heightPercentage('2%'),
     margin: widthPercentage('2%'),
     borderColor: '#75848e',
-    width: widthPercentage('40%'),
   },
   title: {
     fontSize: 20,

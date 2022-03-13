@@ -79,7 +79,7 @@ const Profile = () => {
 
     if (response) {
       const source = {
-        uri: 'data: image/jpeg;base64,' + response.base64,
+        uri: 'data: image/jpeg;base64,' + response.assets[0].base64,
       };
       setImageUri(source);
       try {
