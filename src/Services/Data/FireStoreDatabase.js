@@ -45,7 +45,14 @@ const FireStoreDatabase = () => {
     setDeleteList(deleteArray);
   };
 
-  const writingNoteToFireStore = async (title, note, pin, archive, del) => {
+  const writingNoteToFireStore = async (
+    title,
+    note,
+    pin,
+    archive,
+    del,
+    labelKeys,
+  ) => {
     console.log('delete =>', del);
     try {
       if (title !== '' || note !== '') {
@@ -55,6 +62,7 @@ const FireStoreDatabase = () => {
           Pin: pin,
           Archive: archive,
           Delete: del,
+          LabelKeys: labelKeys,
         });
       }
     } catch (error) {
@@ -62,7 +70,7 @@ const FireStoreDatabase = () => {
     }
   };
 
-  const updateNote = async (id, title, note, pin, archive, del) => {
+  const updateNote = async (id, title, note, pin, archive, del, labelKeys) => {
     try {
       await ref.doc(user).collection('Notes').doc(id).update({
         Title: title,
@@ -70,6 +78,7 @@ const FireStoreDatabase = () => {
         Pin: pin,
         Archive: archive,
         Delete: del,
+        LabelKey: labelKeys,
       });
     } catch (error) {
       console.log(error);

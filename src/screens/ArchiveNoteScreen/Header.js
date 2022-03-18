@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import {useSelector, useDispatch} from 'react-redux';
+import {setGridView} from '../../Services/Redux/Actions';
 
 import {
   heightPercentage,
@@ -8,6 +10,8 @@ import {
 } from '../../utility/DynamicDimensions';
 
 const Header = ({navigation, states}) => {
+  const {gridView} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.left}>
@@ -24,8 +28,8 @@ const Header = ({navigation, states}) => {
             <Feather name="search" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => states.setIcon(!states.icon)}>
-          {states.icon ? (
+        <TouchableOpacity onPress={() => dispatch(setGridView(!gridView))}>
+          {gridView ? (
             <Image source={require('../../../assets/equal.png')} />
           ) : (
             <Feather name="grid" size={24} />

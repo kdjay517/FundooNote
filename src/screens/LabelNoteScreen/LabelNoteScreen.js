@@ -6,52 +6,58 @@ import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
-import Header from './Header';
-import NotesList from '../../components/NotesList';
+import LabelHeader from './LabelHeader';
 import FireStoreDatabase from '../../Services/Data/FireStoreDatabase';
 import LablesData from '../../Services/Data/LabelsData';
-import {useSelector} from 'react-redux';
-
-const DashBoardScreen = ({navigation}) => {
-  const {labelData} = useSelector(state => state.userReducer);
+import NotesList from '../../components/NotesList';
+import {useRoute} from '@react-navigation/native';
+const LabelNoteScreen = ({navigation}) => {
+  const labels = useRoute().params;
+  const {fetchLabel} = LablesData();
   const {pinnedList, fetchingNote, unpinnedList, pin} = FireStoreDatabase();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [icon, setIcon] = useState(false);
 
-  const states = {
-    modalVisible,
-    setModalVisible,
-    icon,
-    setIcon,
-  };
+  const pinnedLabels = pinnedList.filter(notes => {
+    for (let i = 0; i < notes.LabelKey.length; i++) {
+      if (labels.key === notes.LabelKey[i]) {
+        return true;
+      }
+    }
+  });
+
+  const unpinnedLabels = unpinnedList.filter(notes => {
+    for (let i = 0; i < notes.LabelKey.length; i++) {
+      if (labels.key === notes.LabelKey[i]) {
+        return true;
+      }
+    }
+  });
 
   useEffect(() => {
     const unSubscribe = navigation.addListener('focus', () => {
+      fetchLabel();
       fetchingNote();
     });
     return unSubscribe;
-  }, [navigation, fetchingNote]);
+  }, [navigation, fetchLabel, fetchingNote]);
   return (
     <SafeAreaView style={styles.header}>
       <View style={styles.container}>
-        <Header navigation={navigation} states={states} />
+        <LabelHeader navigation={navigation} />
       </View>
       <View style={styles.notes}>
         <NotesList
           navigation={navigation}
-          pinnedList={pinnedList}
-          unpinnedList={unpinnedList}
+          pinnedLabels={pinnedLabels}
+          unpinnedLabels={unpinnedLabels}
           pin={pin}
-          states={states}
-          // labels={labels}
         />
       </View>
-      <BottomBar navigation={navigation} />
+      {/* <BottomBar navigation={navigation} /> */}
     </SafeAreaView>
   );
 };
 
-export default DashBoardScreen;
+export default LabelNoteScreen;
 
 const styles = StyleSheet.create({
   header: {

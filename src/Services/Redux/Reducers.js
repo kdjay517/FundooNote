@@ -1,16 +1,16 @@
-import {SET_GRID_VIEW, SET_LIST_VIEW} from './Actions';
+import {SET_GRID_VIEW, SET_LABEL_DATA} from './Actions';
 
 const initialState = {
   gridView: false,
-  listView: false,
+  labelData: [],
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_GRID_VIEW:
-      return {...state, gridView: action.payload};
-    case SET_LIST_VIEW:
-      return {...state, listView: action.payload};
+      return {...state, gridView: !state.gridView};
+    case SET_LABEL_DATA:
+      return {...state, labelData: action.payload};
     default:
       return state;
   }

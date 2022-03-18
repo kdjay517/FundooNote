@@ -21,7 +21,7 @@ const Labels = ({item}) => {
   const {updateLabel} = LablesData();
 
   const handleUpdate = () => {
-    updateLabel(item.Label, item.key);
+    updateLabel(editLabel, item.key);
   };
 
   const handleIcon = () => {
@@ -42,10 +42,10 @@ const Labels = ({item}) => {
             value={editLabel}
             onChangeText={text => setEditLabel(text)}
             onPressIn={handleIcon}
-            // onBlur={() => {
-            //   handleUpdate;
-            //   setIcon(false);
-            // }}
+            onBlur={() => {
+              handleUpdate();
+              setIcon(false);
+            }}
           />
         </View>
       </View>

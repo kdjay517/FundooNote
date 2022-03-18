@@ -8,7 +8,7 @@ import NewPasswordScreen from '../screens/NewPasswordScreen';
 import {AuthProvider} from './AuthContext';
 import DrawerNavigation from './DrawerNavigation';
 import NotesScreen from '../screens/NotesScreen';
-import DashBoardScreen from '../screens/DashBoardScreen';
+import LabelListScreen from '../screens/LabelListScreen';
 import SearchNotesScreen from '../screens/SearchNotesScreen/SearchNotesScreen';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
@@ -28,15 +28,15 @@ const Navigation = () => {
                     name="DrawerNavigation"
                     component={DrawerNavigation}
                   />
-                  {/* <Stack.Screen
-                  name="DashBoardScreen"
-                  component={DashBoardScreen}
-                /> */}
+                  <Stack.Screen name="NotesScreen" component={NotesScreen} />
                   <Stack.Screen
                     name="SearchNotesScreen"
                     component={SearchNotesScreen}
                   />
-                  <Stack.Screen name="NotesScreen" component={NotesScreen} />
+                  <Stack.Screen
+                    name="LabelListScreen"
+                    component={LabelListScreen}
+                  />
                 </>
               ) : (
                 <>

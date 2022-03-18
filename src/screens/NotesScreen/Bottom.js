@@ -8,14 +8,21 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
-import FireStoreDatabase from '../../Services/Data/FireStoreDatabase';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Bottom = ({
   handleDeleteButton,
   visible,
   setVisible,
   toggleBottomNavigationView,
+  navigation,
+  labelKeys,
 }) => {
+  const handleLabel = () => {
+    toggleBottomNavigationView();
+    navigation.navigate('LabelListScreen', labelKeys);
+  };
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
@@ -40,13 +47,24 @@ const Bottom = ({
         visible={visible}
         onBackButtonPress={toggleBottomNavigationView}
         onBackdropPress={toggleBottomNavigationView}>
-        <View style={styles.bottomNavigationView}>
-          <TouchableOpacity onPress={handleDeleteButton}>
-            <View style={styles.deleteIconView}>
-              <DeleteIcon name="delete" color="black" size={24} />
-              <Text style={styles.deleteText}>Delete</Text>
-            </View>
-          </TouchableOpacity>
+        <View style={styles.bottomContainer}>
+          <View style={styles.deleteView}>
+            <TouchableOpacity onPress={handleDeleteButton}>
+              <View style={styles.deleteIconView}>
+                <DeleteIcon name="delete" color="black" size={24} />
+                <Text style={styles.text}>Delete</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.labelView}>
+            <TouchableOpacity onPress={handleLabel}>
+              <View style={styles.deleteIconView}>
+                <MaterialIcons name="label-outline" size={24} color="black" />
+                <Text style={styles.text}>Label</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </BottomSheet>
     </View>
@@ -61,18 +79,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  bottomNavigationView: {
+  bottomContainer: {
     backgroundColor: '#fff',
     width: '100%',
     height: heightPercentage('20%'),
+    flexDirection: 'column',
+  },
+  deleteView: {
     flexDirection: 'row',
+    flex: 1,
+  },
+  labelView: {
+    flexDirection: 'row',
+    flex: 1,
+    marginTop: heightPercentage('-8%'),
   },
   deleteIconView: {
     flex: 1,
     margin: widthPercentage('3%'),
     flexDirection: 'row',
   },
-  deleteText: {
+  labelMargin: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: heightPercentage('2%'),
+    flexDirection: 'row',
+  },
+  text: {
     fontSize: 18,
     color: 'black',
     paddingLeft: widthPercentage('2%'),

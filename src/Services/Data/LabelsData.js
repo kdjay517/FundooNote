@@ -1,11 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {AuthContext} from '../../navigation/AuthContext';
+import {useSelector, useDispatch} from 'react-redux';
+import {setLabelData} from '../../Services/Redux/Actions';
 
 const ref = firestore().collection('UserNotes');
 const LablesData = () => {
   const {user} = useContext(AuthContext);
   const [labelsList, setLabelsList] = useState([]);
+  const {lableData} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
   const writingLabelToFireStore = async label => {
     try {
       if (label !== '') {
@@ -19,7 +23,6 @@ const LablesData = () => {
   };
 
   const updateLabel = async (label, key) => {
-    console.log('hi update =>', label, key);
     try {
       if (label !== '') {
         await ref.doc(user).collection('Labels').doc(key).update({
@@ -39,7 +42,7 @@ const LablesData = () => {
       data.key = doc.id;
       labelsArray.push(data);
     });
-    setLabelsList(labelsArray);
+    dispatch(setLabelData(labelsArray));
   };
 
   return {

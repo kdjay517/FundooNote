@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BellIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,21 +7,26 @@ import PlusIcon from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
 import LabelsData from '../../Services/Data/LabelsData';
-import LabelsList from './LabelsList';
+import Labels from './Lables';
 import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
+import {useSelector} from 'react-redux';
 const DrawerContent = ({props}) => {
-  const {fetchLabel, labelsList} = LabelsData();
+  const {labelData} = useSelector(state => state.userReducer);
+  const {fetchLabel} = LabelsData();
 
   useEffect(() => {
-    fetchLabel();
-  }, []);
+    const unSubscribe = props.navigation.addListener('focus', () => {
+      fetchLabel();
+    });
+    return unSubscribe;
+  }, [props.navigation, fetchLabel]);
 
   return (
     <View style={{flex: 1}}>
-      <DrawerContentScrollView props={props} labelsList={labelsList}>
+      <DrawerContentScrollView props={props}>
         <View style={styles.title}>
           <Text style={{fontSize: 28, color: 'blue'}}>F</Text>
           <Text style={{fontSize: 28, color: 'red'}}>u</Text>
@@ -51,21 +56,32 @@ const DrawerContent = ({props}) => {
             props.navigation.navigate('AddRemainderScreen');
           }}
         />
+        {labelData.length ? (
+          <View style={styles.margins}>
+            <View style={styles.labelview}>
+              <Text>Label</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('NewLableScreen');
+                }}>
+                <Text>Edit</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Labels labelData={labelData} props={props} />
+            </View>
 
-        <View style={styles.margins}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              margin: 25,
-            }}>
-            <Text>Label</Text>
-            <Text>Edit</Text>
+            <DrawerItem
+              icon={({color, size}) => (
+                <PlusIcon name="plus" color={color} size={size} />
+              )}
+              label="Create new label"
+              onPress={() => {
+                props.navigation.navigate('NewLableScreen');
+              }}
+            />
           </View>
-          <View>
-            <LabelsList labelsList={labelsList} />
-          </View>
-
+        ) : (
           <DrawerItem
             icon={({color, size}) => (
               <PlusIcon name="plus" color={color} size={size} />
@@ -75,7 +91,8 @@ const DrawerContent = ({props}) => {
               props.navigation.navigate('NewLableScreen');
             }}
           />
-        </View>
+        )}
+
         <DrawerItem
           icon={({color, size}) => (
             <Ionicons name="archive-outline" color={color} size={size} />
@@ -121,5 +138,11 @@ const styles = StyleSheet.create({
     paddingTop: heightPercentage('5%'),
     paddingHorizontal: widthPercentage('10%'),
     flexDirection: 'row',
+  },
+  labelview: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: heightPercentage('2%'),
+    marginHorizontal: widthPercentage('5%'),
   },
 });

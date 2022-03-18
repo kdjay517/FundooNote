@@ -11,25 +11,27 @@ import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
-
-const Labels = ({item}) => {
-  const [editLabel, setEditLabel] = useState(item.Label);
-  const [icon, setIcon] = useState(false);
-
-  const handleIcon = () => {
-    setIcon(!icon);
-  };
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.lableView}>
-        <MaterialIcons name="label-outline" size={24} color="black" />
-        <View style={styles.textView}>
-          <Text style={styles.text}>{item.Label}</Text>
+const Labels = ({labelData, props}) => {
+  let myLoop = [];
+  for (let i = 0; i < labelData.length; i++) {
+    myLoop.push(
+      <TouchableOpacity
+        key={labelData[i].Label}
+        onPress={() =>
+          props.navigation.navigate('LabelNoteScreen', {...labelData[i]})
+        }>
+        <View style={styles.container}>
+          <View style={styles.lableView}>
+            <MaterialIcons name="label-outline" size={24} color="black" />
+            <View style={styles.textView}>
+              <Text style={styles.text}>{labelData[i].Label}</Text>
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
-  );
+      </TouchableOpacity>,
+    );
+  }
+  return <>{myLoop}</>;
 };
 export default Labels;
 

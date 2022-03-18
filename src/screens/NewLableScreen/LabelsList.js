@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TextInput, StyleSheet, FlatList} from 'react-native';
 import Labels from './Labels';
 
-const LabelsList = ({labelsList}) => {
+const LabelsList = ({labelData}) => {
   const renderItem = ({item}) => {
     return <Labels item={item} />;
   };
@@ -10,7 +10,7 @@ const LabelsList = ({labelsList}) => {
   return (
     <>
       <FlatList
-        data={labelsList}
+        data={labelData}
         renderItem={renderItem}
         keyExtractor={item => item.key}
       />

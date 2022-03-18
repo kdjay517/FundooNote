@@ -1,5 +1,5 @@
 export const SET_GRID_VIEW = 'SET_GRID_VIEW';
-export const SET_LIST_VIEW = 'SET_LIST_VIEW';
+export const SET_LABEL_DATA = 'SET_LABEL_DATA';
 
 export const setGridView = gridView => dispatch => {
   dispatch({
@@ -8,9 +8,9 @@ export const setGridView = gridView => dispatch => {
   });
 };
 
-export const setListView = listView => dispatch => {
+export const setLabelData = labelData => dispatch => {
   dispatch({
-    type: SET_LIST_VIEW,
-    payload: listView,
+    type: SET_LABEL_DATA,
+    payload: labelData,
   });
 };

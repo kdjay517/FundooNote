@@ -1,14 +1,17 @@
 import React, {useState, useContext} from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, View, Text} from 'react-native';
 import Header from './Header';
 import Bottom from './Bottom';
 import Notes from './Notes';
+import Chip from '../../components/Chip';
 import FireStoreDatabase from '../../Services/Data/FireStoreDatabase';
 import {useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 const NotesScreen = ({navigation}) => {
   const noteData = useRoute().params;
-
+  const {labelData} = useSelector(state => state.userReducer);
   const {writingNoteToFireStore, updateNote} = FireStoreDatabase();
+  const labelKeys = noteData?.labelKeys || noteData?.LabelKey;
   const [title, setTitle] = useState(noteData?.Title || '');
   const [note, setNote] = useState(noteData?.Note || '');
   const [id, setId] = useState(noteData?.key || '');
@@ -32,13 +35,13 @@ const NotesScreen = ({navigation}) => {
 
   const onBackPress = async () => {
     if (id) {
-      await updateNote(id, title, note, pin, archive, del);
+      await updateNote(id, title, note, pin, archive, del, labelKeys);
     } else {
-      await writingNoteToFireStore(title, note, pin, archive, del);
+      await writingNoteToFireStore(title, note, pin, archive, del, labelKeys);
       setNote('');
       setTitle('');
     }
-    navigation.navigate('DashBoardScreen');
+    navigation.goBack();
   };
 
   const toggleBottomNavigationView = () => {
@@ -51,6 +54,14 @@ const NotesScreen = ({navigation}) => {
     navigation.navigate('DashBoardScreen');
   };
 
+  let labels = labelData.filter(label => {
+    for (let i = 0; i < labelKeys.length; i++) {
+      if (label.key === labelKeys[i]) {
+        return true;
+      }
+    }
+  });
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View>
@@ -58,10 +69,14 @@ const NotesScreen = ({navigation}) => {
       </View>
       <View style={{flex: 1, margin: 10}}>
         <Notes {...states} />
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {labelKeys?.length ? <Chip labels={labels} /> : null}
+        </View>
       </View>
       <Bottom
         navigation={navigation}
         visible={visible}
+        labelKeys={labelKeys}
         setVisible={setVisible}
         handleDeleteButton={handleDeleteButton}
         toggleBottomNavigationView={toggleBottomNavigationView}

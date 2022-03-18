@@ -1,11 +1,13 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import NoteCard from './NoteCard';
+import {useSelector, useDispatch} from 'react-redux';
 
 const ArchiveList = ({navigation, archiveList, states}) => {
-  let numCols = states.icon ? 2 : 0;
+  const {gridView} = useSelector(state => state.userReducer);
+  let numCols = gridView ? 2 : 0;
   const renderItem = ({item}) => (
-    <NoteCard navigation={navigation} item={item} states={states} />
+    <NoteCard navigation={navigation} item={item} gridView={gridView} />
   );
 
   return (

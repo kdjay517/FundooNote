@@ -5,13 +5,13 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 
-const NoteCard = ({navigation, item, states}) => {
+const NoteCard = ({navigation, item, gridView}) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('NotesScreen', {...item})}>
       <View
         style={[
-          {width: states.icon ? widthPercentage('40%') : null},
+          {width: gridView ? widthPercentage('40%') : null},
           styles.container,
         ]}>
         <Text style={styles.title}>{item.Title}</Text>

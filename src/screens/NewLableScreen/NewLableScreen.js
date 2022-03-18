@@ -6,6 +6,7 @@ import {heightPercentage} from '../../utility/DynamicDimensions';
 import LabelsData from '../../Services/Data/LabelsData';
 import Labels from './Labels';
 import LabelsList from './LabelsList';
+import {useSelector} from 'react-redux';
 
 const NewLableScreen = ({navigation}) => {
   const [cross, setCross] = useState(true);
@@ -13,7 +14,7 @@ const NewLableScreen = ({navigation}) => {
   const [right, setRight] = useState(true);
   const [input, setInput] = useState('');
 
-  console.log('input length =>', input.length);
+  const {labelData} = useSelector(state => state.userReducer);
 
   const states = {
     cross,
@@ -47,7 +48,7 @@ const NewLableScreen = ({navigation}) => {
       <LableHeader navigation={navigation} states={states} />
       <NewLabel states={states} handleDoneIcon={handleDoneIcon} />
       <View style={styles.labelView}>
-        {labelsList.length ? <LabelsList labelsList={labelsList} /> : null}
+        {labelData.length ? <LabelsList labelData={labelData} /> : null}
       </View>
     </SafeAreaView>
   );
