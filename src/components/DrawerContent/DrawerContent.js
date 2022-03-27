@@ -38,33 +38,39 @@ const DrawerContent = ({props}) => {
         </View>
 
         <DrawerItem
-          label="Notes"
-          icon={({color, size}) => (
-            <Icon name="lightbulb-outline" color={color} size={size} />
+          label={() => (
+            <Text style={{color: 'black', fontSize: 14}}>Notes</Text>
+          )}
+          icon={() => (
+            <Icon name="lightbulb-outline" color={'black'} size={24} />
           )}
           onPress={() => {
             props.navigation.navigate('DashBoardScreen');
           }}
           activeTintColor="blue"
+          style={styles.drawerItems}
         />
         <DrawerItem
-          icon={({color, size}) => (
-            <BellIcon name="bell-outline" color={color} size={size} />
+          icon={() => (
+            <BellIcon name="bell-outline" color={'black'} size={24} />
           )}
-          label="Remainders"
+          label={() => (
+            <Text style={{color: 'black', fontSize: 14}}>Remainders</Text>
+          )}
           onPress={() => {
             props.navigation.navigate('AddRemainderScreen');
           }}
+          style={styles.drawerItems}
         />
         {labelData.length ? (
           <View style={styles.margins}>
             <View style={styles.labelview}>
-              <Text>Label</Text>
+              <Text style={styles.text}>Label</Text>
               <TouchableOpacity
                 onPress={() => {
                   props.navigation.navigate('NewLableScreen');
                 }}>
-                <Text>Edit</Text>
+                <Text style={styles.text}>Edit</Text>
               </TouchableOpacity>
             </View>
             <View>
@@ -72,50 +78,62 @@ const DrawerContent = ({props}) => {
             </View>
 
             <DrawerItem
-              icon={({color, size}) => (
-                <PlusIcon name="plus" color={color} size={size} />
+              icon={() => <PlusIcon name="plus" color={'black'} size={24} />}
+              label={() => (
+                <Text style={{color: 'black', fontSize: 14}}>
+                  Create new label
+                </Text>
               )}
-              label="Create new label"
               onPress={() => {
                 props.navigation.navigate('NewLableScreen');
               }}
+              style={styles.drawerItems}
             />
           </View>
         ) : (
           <DrawerItem
-            icon={({color, size}) => (
-              <PlusIcon name="plus" color={color} size={size} />
+            icon={() => <PlusIcon name="plus" color={'black'} size={24} />}
+            label={() => (
+              <Text style={{color: 'black', fontSize: 14}}>
+                Create new label
+              </Text>
             )}
-            label="Create new label"
             onPress={() => {
               props.navigation.navigate('NewLableScreen');
             }}
+            style={styles.drawerItems}
           />
         )}
 
         <DrawerItem
-          icon={({color, size}) => (
-            <Ionicons name="archive-outline" color={color} size={size} />
+          icon={() => (
+            <Ionicons name="archive-outline" color={'black'} size={24} />
           )}
-          label="Archive"
+          label={() => (
+            <Text style={{color: 'black', fontSize: 14}}>Archive</Text>
+          )}
           onPress={() => {
             props.navigation.navigate('ArchiveNoteScreen');
           }}
+          style={styles.drawerItems}
         />
         <DrawerItem
-          icon={({color, size}) => (
-            <DeleteIcon name="delete" color={color} size={size} />
+          icon={() => <DeleteIcon name="delete" color={'black'} size={24} />}
+          label={() => (
+            <Text style={{color: 'black', fontSize: 14}}>Deleted</Text>
           )}
-          label="Deleted"
           onPress={() => {
             props.navigation.navigate('TrashScreen');
           }}
+          style={styles.drawerItems}
         />
         <DrawerItem
-          icon={({color, size}) => (
-            <Ionicons name="settings-outline" color={color} size={size} />
+          icon={() => (
+            <Ionicons name="settings-outline" color={'black'} size={24} />
           )}
-          label="Settings"
+          label={() => (
+            <Text style={{color: 'black', fontSize: 14}}>Settings</Text>
+          )}
           onPress={() => {
             props.navigation.navigate('SettingsScreen');
           }}
@@ -129,10 +147,12 @@ export default DrawerContent;
 
 const styles = StyleSheet.create({
   margins: {
+    marginTop: heightPercentage('1%'),
     borderBottomColor: 'blue',
     borderBottomWidth: 1,
     borderTopColor: 'blue',
     borderTopWidth: 1,
+    paddingBottom: heightPercentage('2%'),
   },
   title: {
     paddingTop: heightPercentage('5%'),
@@ -144,5 +164,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: heightPercentage('2%'),
     marginHorizontal: widthPercentage('5%'),
+  },
+  text: {
+    color: 'black',
+  },
+  drawerItems: {
+    marginBottom: heightPercentage('-1%'),
   },
 });

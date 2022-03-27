@@ -16,12 +16,17 @@ import LablesData from '../../Services/Data/LabelsData';
 
 const Labels = ({item}) => {
   const [editLabel, setEditLabel] = useState(item.Label);
+
   const [icon, setIcon] = useState(false);
 
-  const {updateLabel} = LablesData();
+  const {updateLabel, deleteLabel} = LablesData();
 
   const handleUpdate = () => {
     updateLabel(editLabel, item.key);
+  };
+
+  const handleDelete = () => {
+    deleteLabel(item.key);
   };
 
   const handleIcon = () => {
@@ -32,7 +37,12 @@ const Labels = ({item}) => {
     <View style={styles.container}>
       <View style={styles.lableView}>
         {icon ? (
-          <DeleteIcon name="delete" size={24} color="black" />
+          <DeleteIcon
+            name="delete"
+            size={24}
+            color="black"
+            onPress={handleDelete}
+          />
         ) : (
           <MaterialIcons name="label-outline" size={24} color="black" />
         )}

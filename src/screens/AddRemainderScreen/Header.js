@@ -9,7 +9,7 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 
-const Header = ({navigation, states}) => {
+const Header = ({navigation}) => {
   const {gridView} = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
   return (
@@ -19,7 +19,7 @@ const Header = ({navigation, states}) => {
           <Feather name="menu" size={24} color="black" />
         </TouchableOpacity>
         <View style={styles.leftspace}>
-          <Text style={styles.text}>Archive</Text>
+          <Text style={styles.text}>Reminders</Text>
         </View>
       </View>
       <View style={styles.right}>
@@ -65,5 +65,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
+    fontSize: 16,
   },
 });

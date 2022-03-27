@@ -7,8 +7,16 @@ import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
+import ReminderBottomSheet from '../../components/BottomSheet/ReminderBottomSheet';
 
-const Header = ({states, onBackPress}) => {
+const Header = ({
+  states,
+  onBackPress,
+  handleDeleteButton,
+  reminderVisible,
+  handleReminderSheet,
+  navigation,
+}) => {
   return (
     <>
       <View style={styles.container}>
@@ -16,6 +24,7 @@ const Header = ({states, onBackPress}) => {
           <IconButton
             icon={'keyboard-backspace'}
             size={24}
+            color="black"
             onPress={() => onBackPress()}
           />
         </View>
@@ -30,7 +39,8 @@ const Header = ({states, onBackPress}) => {
             <IconButton
               icon={'bell-outline'}
               size={24}
-              onPress={() => alert('hi')}
+              color="black"
+              onPress={handleReminderSheet}
             />
           </View>
 

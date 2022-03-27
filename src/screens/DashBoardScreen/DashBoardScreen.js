@@ -43,7 +43,6 @@ const DashBoardScreen = ({navigation}) => {
           unpinnedList={unpinnedList}
           pin={pin}
           states={states}
-          // labels={labels}
         />
       </View>
       <BottomBar navigation={navigation} />
@@ -56,16 +55,18 @@ export default DashBoardScreen;
 const styles = StyleSheet.create({
   header: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   container: {
-    paddingTop: heightPercentage('2%'),
+    marginTop: heightPercentage('2%'),
     backgroundColor: '#fff',
-    padding: 8,
+    marginHorizontal: widthPercentage('1.5%'),
+    marginBottom: heightPercentage('1%'),
   },
   notes: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: heightPercentage('2%'),
-    paddingHorizontal: widthPercentage('5%'),
+    // padding: heightPercentage('2%'),
+    // paddingHorizontal: widthPercentage('5%'),
   },
 });

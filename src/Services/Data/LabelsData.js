@@ -34,6 +34,14 @@ const LablesData = () => {
     }
   };
 
+  const deleteLabel = async key => {
+    try {
+      await ref.doc(user).collection('Labels').doc(key).delete();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchLabel = async () => {
     let labelsArray = [];
     const list = await ref.doc(user).collection('Labels').get();
@@ -50,6 +58,7 @@ const LablesData = () => {
     fetchLabel,
     updateLabel,
     labelsList,
+    deleteLabel,
   };
 };
 

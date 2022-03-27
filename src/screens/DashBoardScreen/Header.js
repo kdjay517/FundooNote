@@ -29,11 +29,11 @@ const Header = ({navigation, states}) => {
               fetchLabel();
               navigation.openDrawer();
             }}>
-            <Feather name="menu" size={24} />
+            <Feather name="menu" size={24} color={'black'} />
           </TouchableOpacity>
           <View style={styles.leftspace}>
             <TouchableOpacity onPress={handleSearchNote}>
-              <Text>Search yours notes</Text>
+              <Text style={styles.text}>Search yours notes</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -43,7 +43,7 @@ const Header = ({navigation, states}) => {
               {gridView ? (
                 <Image source={require('../../../assets/equal.png')} />
               ) : (
-                <Feather name="grid" size={24} />
+                <Feather name="grid" size={24} color={'black'} />
               )}
             </TouchableOpacity>
           </View>
@@ -81,5 +81,9 @@ const styles = StyleSheet.create({
   },
   rightspace: {
     paddingRight: widthPercentage('5%'),
+  },
+  text: {
+    fontSize: 16,
+    color: 'black',
   },
 });

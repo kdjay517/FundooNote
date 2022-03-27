@@ -1,14 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-const Chip = labels => {
-  console.log('chip labels =>', labels.labels);
+const Chip = ({labels}) => {
   let labelData = [];
-  for (let i = 0; i < labels.labels.length; i++) {
+  for (let i = 0; i < labels?.length; i++) {
     labelData.push(
-      <View style={styles.container} key={labels.labels[i].Label}>
+      <View style={styles.container} key={labels[i].Label}>
         <View>
-          <Text style={styles.text}>{labels.labels[i].Label}</Text>
+          <Text style={styles.text}>{labels[i].Label}</Text>
         </View>
       </View>,
     );

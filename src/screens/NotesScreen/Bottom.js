@@ -9,14 +9,21 @@ import {
 } from '../../utility/DynamicDimensions';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ReminderBottomSheet from '../../components/BottomSheet/ReminderBottomSheet';
 
 const Bottom = ({
   handleDeleteButton,
   visible,
-  setVisible,
   toggleBottomNavigationView,
   navigation,
   labelKeys,
+  reminderVisible,
+  handleReminderSheet,
+  modalVisible,
+  showModal,
+  hideModal,
+  setReminder,
+  setReminderVisible,
 }) => {
   const handleLabel = () => {
     toggleBottomNavigationView();
@@ -29,9 +36,10 @@ const Bottom = ({
         <IconButton
           icon={'plus-box-outline'}
           size={24}
+          color="black"
           onPress={() => alert('hi')}
         />
-        <IconButton icon={'palette-outline'} size={24} />
+        <IconButton icon={'palette-outline'} size={24} color="black" />
       </View>
       <View style={{justifyContent: 'center'}}>
         <GetTime />
@@ -40,6 +48,7 @@ const Bottom = ({
         <IconButton
           icon={'dots-vertical'}
           size={24}
+          color="black"
           onPress={toggleBottomNavigationView}
         />
       </View>
@@ -67,6 +76,13 @@ const Bottom = ({
           </View>
         </View>
       </BottomSheet>
+      <ReminderBottomSheet
+        reminderVisible={reminderVisible}
+        handleReminderSheet={handleReminderSheet}
+        showModal={showModal}
+        setReminder={setReminder}
+        setReminderVisible={setReminderVisible}
+      />
     </View>
   );
 };

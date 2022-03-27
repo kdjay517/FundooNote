@@ -11,6 +11,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {setGridView} from '../../Services/Redux/Actions';
 import userReducer from '../../Services/Redux/Reducers';
 import {useRoute} from '@react-navigation/native';
+import BottomBar from '../../components/BottomBar/BottomBar';
 const LabelHeader = ({navigation, states}) => {
   const labels = useRoute().params;
   const [labelName, setLabelName] = useState(labels?.Label || '');
@@ -25,7 +26,7 @@ const LabelHeader = ({navigation, states}) => {
             onPress={() => {
               navigation.openDrawer();
             }}>
-            <Feather name="menu" size={24} />
+            <Feather name="menu" size={24} color="black" />
           </TouchableOpacity>
           <View style={styles.leftspace}>
             <TouchableOpacity>
@@ -47,7 +48,7 @@ const LabelHeader = ({navigation, states}) => {
             {gridView ? (
               <Image source={require('../../../assets/equal.png')} />
             ) : (
-              <Feather name="grid" size={24} />
+              <Feather name="grid" size={24} color="black" />
             )}
           </TouchableOpacity>
           <IconButton icon={'dots-vertical'} size={24} color="black" />

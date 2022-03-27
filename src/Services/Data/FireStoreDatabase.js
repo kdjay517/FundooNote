@@ -52,8 +52,8 @@ const FireStoreDatabase = () => {
     archive,
     del,
     labelKeys,
+    reminder,
   ) => {
-    console.log('delete =>', del);
     try {
       if (title !== '' || note !== '') {
         await ref.doc(user).collection('Notes').add({
@@ -63,6 +63,7 @@ const FireStoreDatabase = () => {
           Archive: archive,
           Delete: del,
           LabelKeys: labelKeys,
+          Reminder: reminder,
         });
       }
     } catch (error) {
@@ -70,7 +71,16 @@ const FireStoreDatabase = () => {
     }
   };
 
-  const updateNote = async (id, title, note, pin, archive, del, labelKeys) => {
+  const updateNote = async (
+    id,
+    title,
+    note,
+    pin,
+    archive,
+    del,
+    labelKeys,
+    reminder,
+  ) => {
     try {
       await ref.doc(user).collection('Notes').doc(id).update({
         Title: title,
@@ -79,6 +89,7 @@ const FireStoreDatabase = () => {
         Archive: archive,
         Delete: del,
         LabelKey: labelKeys,
+        Reminder: reminder,
       });
     } catch (error) {
       console.log(error);

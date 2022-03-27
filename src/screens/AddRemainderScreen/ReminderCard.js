@@ -5,10 +5,10 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 import {useSelector} from 'react-redux';
-import Chip from '../Chip';
-import ReminderChip from '../Chip/ReminderChip';
+import Chip from '../../components/Chip';
+import ReminderChip from '../../components/Chip/ReminderChip';
 
-const NoteCard = ({navigation, item, gridView}) => {
+const ReminderCard = ({navigation, item, gridView}) => {
   const {labelData} = useSelector(state => state.userReducer);
   const reminder = item.Reminder;
   console.log('reminder =>', reminder);
@@ -40,7 +40,7 @@ const NoteCard = ({navigation, item, gridView}) => {
     </TouchableOpacity>
   );
 };
-export default NoteCard;
+export default ReminderCard;
 
 const styles = StyleSheet.create({
   container: {

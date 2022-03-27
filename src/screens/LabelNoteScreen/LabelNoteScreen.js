@@ -12,20 +12,20 @@ import LablesData from '../../Services/Data/LabelsData';
 import NotesList from '../../components/NotesList';
 import {useRoute} from '@react-navigation/native';
 const LabelNoteScreen = ({navigation}) => {
-  const labels = useRoute().params;
+  let labels = [];
+  labels = useRoute().params;
   const {fetchLabel} = LablesData();
   const {pinnedList, fetchingNote, unpinnedList, pin} = FireStoreDatabase();
 
   const pinnedLabels = pinnedList.filter(notes => {
-    for (let i = 0; i < notes.LabelKey.length; i++) {
+    for (let i = 0; i < notes.LabelKey?.length; i++) {
       if (labels.key === notes.LabelKey[i]) {
         return true;
       }
     }
   });
-
   const unpinnedLabels = unpinnedList.filter(notes => {
-    for (let i = 0; i < notes.LabelKey.length; i++) {
+    for (let i = 0; i < notes.LabelKey?.length; i++) {
       if (labels.key === notes.LabelKey[i]) {
         return true;
       }
@@ -52,7 +52,7 @@ const LabelNoteScreen = ({navigation}) => {
           pin={pin}
         />
       </View>
-      {/* <BottomBar navigation={navigation} /> */}
+      <BottomBar navigation={navigation} labels={labels} />
     </SafeAreaView>
   );
 };

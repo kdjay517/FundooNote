@@ -11,20 +11,15 @@ const NotesList = ({
   unpinnedLabels,
 }) => {
   const {gridView} = useSelector(state => state.userReducer);
-
   let numCols = gridView ? 2 : 0;
-
-  console.log('unpinned list =>', unpinnedList);
-
   const renderItem = ({item}) => {
     return <NoteCard gridView={gridView} item={item} navigation={navigation} />;
   };
 
   const sections = [
-    {title: 'pinned', data: [{list: pinnedList ?? pinnedLabels}]},
-    {title: 'others', data: [{list: unpinnedList ?? unpinnedLabels}]},
+    {title: 'pinned', data: [{list: pinnedList || pinnedLabels}]},
+    {title: 'others', data: [{list: unpinnedList || unpinnedLabels}]},
   ];
-
   const renderSection = ({item}) => {
     return (
       <FlatList
@@ -42,7 +37,7 @@ const NotesList = ({
       <SectionList
         sections={sections}
         renderSectionHeader={({section}) =>
-          pinnedList?.length ?? pinnedLabels?.length > 0 ? (
+          pinnedList?.length || pinnedLabels?.length ? (
             <Text> {section.title}</Text>
           ) : null
         }

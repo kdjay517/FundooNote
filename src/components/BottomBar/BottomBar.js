@@ -6,7 +6,7 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 
-const BottomBar = ({navigation}) => {
+const BottomBar = ({navigation, labels}) => {
   return (
     <>
       <View style={styles.container}>
@@ -29,7 +29,8 @@ const BottomBar = ({navigation}) => {
         </TouchableOpacity>
 
         <View style={styles.plusicon}>
-          <TouchableOpacity onPress={() => navigation.navigate('NotesScreen')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NotesScreen', {...labels})}>
             <Image source={require('../../../assets/plus.png')} />
           </TouchableOpacity>
         </View>

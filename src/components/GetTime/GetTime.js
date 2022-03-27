@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, Alert} from 'react-native';
+import {Text, View} from 'react-native';
 
 export default class GetTime extends Component {
   constructor(props) {
@@ -7,6 +7,8 @@ export default class GetTime extends Component {
 
     this.state = {
       time: '',
+      fDay: '',
+      sDay: '',
     };
   }
 
@@ -19,7 +21,7 @@ export default class GetTime extends Component {
   }
 
   handleTime() {
-    var date, TimeType, hour, minutes, seconds, fullTime;
+    var date, TimeType, hour, minutes, fullTime, fullDay, shortDay;
 
     date = new Date();
 
@@ -42,11 +44,43 @@ export default class GetTime extends Component {
       minutes = '0' + minutes.toString();
     }
 
+    day = date.getDay();
+    if (day === 1) {
+      fullDay = 'Monday';
+      shortDay = 'Tuesday';
+    }
+    if (day === 2) {
+      fullDay = 'Tuesday';
+      shortDay = 'Tue';
+    }
+    if (day === 3) {
+      fullDay = 'Wednsday';
+      shortDay = 'Wed';
+    }
+    if (day === 4) {
+      fullDay = 'Thursday';
+      shortDay = 'Thu';
+    }
+    if (day === 5) {
+      fullDay = 'Friday';
+      shortDay = 'Fri';
+    }
+    if (day === 6) {
+      fullDay = 'Saturday';
+      shortDay = 'Sat';
+    }
+    if (day === 7) {
+      fullDay = 'Sunday';
+      shortDay = 'Sun';
+    }
+
     fullTime =
       hour.toString() + ':' + minutes.toString() + ':' + TimeType.toString();
 
     this.setState({
       time: fullTime,
+      fDay: fullDay,
+      sDay: shortDay,
     });
   }
 
@@ -58,24 +92,3 @@ export default class GetTime extends Component {
     );
   }
 }
-
-// const styles = StyleSheet.create(
-// {
-//   MainContainer:
-//   {
-//      justifyContent: 'center',
-//      alignItems: 'center',
-//      flex:1,
-//      margin: 10
-
-//   },
-
-//   TextStyle:
-//   {
-//      fontSize: 26,
-//      textAlign: 'center',
-//      color: '#009688',
-//      marginBottom: 20,
-//   }
-
-// });
