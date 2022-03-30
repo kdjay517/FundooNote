@@ -4,6 +4,7 @@ const LocalNotification = (title, note, alarm) => {
   PushNotification.localNotificationSchedule({
     channelId: 'channel-id',
     channelName: 'My channel',
+    // id: id,
     autoCancel: true,
     title: title,
     message: note,

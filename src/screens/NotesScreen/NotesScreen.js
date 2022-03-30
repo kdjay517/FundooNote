@@ -78,9 +78,9 @@ const NotesScreen = ({navigation}) => {
       setTitle('');
     }
     if (alarm !== null) {
-      // if (alarm > moment().format('YYYY-MM-DD hh:mm')) {
-      LocalNotification(title, note, alarm);
-      // }
+      if (alarm > moment().format('YYYY-MM-DD hh:mm')) {
+        LocalNotification(title, note, alarm);
+      }
     }
 
     navigation.goBack();
