@@ -9,7 +9,17 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SelectDay from './SelectDay';
 import SelectTime from './SelectTime';
 import moment from 'moment';
-const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
+import CancelNotification from '../../Services/Notifications/CancelNotification';
+const AddReminder = ({
+  modalVisible,
+  hideModal,
+  showRepeaterModal,
+  setReminder,
+  setAlarm,
+  alarm,
+  edit,
+  setEdit,
+}) => {
   const containerStyle = {
     backgroundColor: 'white',
     margin: widthPercentage('8%'),
@@ -17,23 +27,42 @@ const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
   };
 
   const [date, setDate] = useState(moment().format('DD MMMM'));
-  const [time, setTime] = useState('8.00 a.m.');
+  const [fullDate, setFullDate] = useState(moment().format('YYYY-MM-DD'));
+  const [time, setTime] = useState(moment().format('HH:mm a'));
+  const [alarmTime, setAlarmTime] = useState(moment().format('hh:mm'));
   const [dayModal, setDayModal] = useState(false);
   const [timeModal, setTimeModal] = useState(false);
 
-  const showDayModal = useCallback(() => {
-    setDayModal(!dayModal);
-  }, [dayModal]);
-  const hideDayModal = useCallback(() => {
-    setDayModal(!dayModal);
-  }, [dayModal]);
+  const handleSaveButton = () => {
+    setReminder(date + ',' + time);
+    setAlarm(fullDate + ' ' + alarmTime);
+    hideModal();
+  };
 
-  const showTimeModal = useCallback(() => {
+  const handleCancelButton = () => {
+    hideModal();
+  };
+
+  const handleDeleteButton = id => {
+    setReminder('');
+    CancelNotification(id);
+    setEdit(false);
+    hideModal();
+  };
+
+  const showDayModal = () => {
+    setDayModal(!dayModal);
+  };
+  const hideDayModal = () => {
+    setDayModal(!dayModal);
+  };
+
+  const showTimeModal = () => {
     setTimeModal(!timeModal);
-  }, [setTimeModal]);
-  const hideTimeModal = useCallback(() => {
+  };
+  const hideTimeModal = () => {
     setTimeModal(!timeModal);
-  }, [timeModal]);
+  };
 
   return (
     <Portal>
@@ -42,7 +71,9 @@ const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
         onDismiss={hideModal}
         contentContainerStyle={containerStyle}>
         <View style={styles.reminderView}>
-          <Text style={styles.header}>AddReminder</Text>
+          <Text style={styles.header}>
+            {edit ? 'Edit reminder' : 'Add reminder'}
+          </Text>
         </View>
         <View style={styles.time}>
           <Text style={styles.text}>Time</Text>
@@ -52,6 +83,8 @@ const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
             dayModal={dayModal}
             hideDayModal={hideDayModal}
             setDate={setDate}
+            showDayModal={showDayModal}
+            setFullDate={setFullDate}
           />
           <TouchableOpacity onPress={showDayModal}>
             <View style={styles.iconView}>
@@ -64,6 +97,7 @@ const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
             hideTimeModal={hideTimeModal}
             setTimeModal={setTimeModal}
             setTime={setTime}
+            setAlarmTime={setAlarmTime}
           />
           <TouchableOpacity onPress={showTimeModal}>
             <View style={styles.iconView}>
@@ -87,7 +121,16 @@ const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
             paddingTop: heightPercentage('2%'),
             alignContent: 'center',
           }}>
-          <TouchableOpacity style={{paddingRight: widthPercentage('2%')}}>
+          {edit ? (
+            <TouchableOpacity
+              style={{paddingRight: widthPercentage('2%')}}
+              onPress={handleDeleteButton}>
+              <Text style={{color: 'blue', fontSize: 16}}>delete</Text>
+            </TouchableOpacity>
+          ) : null}
+          <TouchableOpacity
+            style={{paddingRight: widthPercentage('2%')}}
+            onPress={handleCancelButton}>
             <Text style={{color: 'blue', fontSize: 16}}>cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -95,7 +138,8 @@ const AddReminder = ({modalVisible, hideModal, showRepeaterModal}) => {
               backgroundColor: 'blue',
               borderRadius: widthPercentage('2%'),
               justifyContent: 'center',
-            }}>
+            }}
+            onPress={handleSaveButton}>
             <Text
               style={{
                 color: 'white',

@@ -8,10 +8,9 @@ import {useSelector} from 'react-redux';
 import Chip from '../../components/Chip';
 import ReminderChip from '../../components/Chip/ReminderChip';
 
-const ReminderCard = ({navigation, item, gridView}) => {
+const ReminderCard = ({navigation, item, gridView, showModal}) => {
   const {labelData} = useSelector(state => state.userReducer);
   const reminder = item.Reminder;
-  console.log('reminder =>', reminder);
   const labels = labelData.filter(label => {
     for (let i = 0; i < labelData.length; i++) {
       if (label.key === item?.LabelKey?.[i]) {
@@ -34,7 +33,9 @@ const ReminderCard = ({navigation, item, gridView}) => {
         <Text style={styles.note}>{item.Note}</Text>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           {labelData?.length ? <Chip labels={labels} /> : null}
-          {reminder?.length ? <ReminderChip reminder={reminder} /> : null}
+          {reminder?.length ? (
+            <ReminderChip reminder={reminder} navigation={navigation} />
+          ) : null}
         </View>
       </View>
     </TouchableOpacity>

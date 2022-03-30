@@ -10,8 +10,8 @@ import ReminderChip from '../Chip/ReminderChip';
 
 const NoteCard = ({navigation, item, gridView}) => {
   const {labelData} = useSelector(state => state.userReducer);
-  const reminder = item.Reminder;
-  console.log('reminder =>', reminder);
+  const alarm = item.Reminder;
+
   const labels = labelData.filter(label => {
     for (let i = 0; i < labelData.length; i++) {
       if (label.key === item?.LabelKey?.[i]) {
@@ -34,7 +34,7 @@ const NoteCard = ({navigation, item, gridView}) => {
         <Text style={styles.note}>{item.Note}</Text>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           {labelData?.length ? <Chip labels={labels} /> : null}
-          {reminder?.length ? <ReminderChip reminder={reminder} /> : null}
+          {alarm?.length ? <ReminderChip alarm={alarm} /> : null}
         </View>
       </View>
     </TouchableOpacity>

@@ -7,7 +7,7 @@ import {
 } from '../../utility/DynamicDimensions';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TimePicker from './TimePicker';
-const SelectTime = ({timeModal, hideTimeModal, setTime}) => {
+const SelectTime = ({timeModal, hideTimeModal, setTime, setAlarmTime}) => {
   const containerStyle = {
     backgroundColor: 'white',
     margin: widthPercentage('8%'),
@@ -74,7 +74,13 @@ const SelectTime = ({timeModal, hideTimeModal, setTime}) => {
               <Text style={styles.text}>8.00 p.m</Text>
             </View>
           </TouchableOpacity>
-          <TimePicker visible={visible} setVisible={setVisible} />
+          <TimePicker
+            visible={visible}
+            setVisible={setVisible}
+            hideTimeModal={hideTimeModal}
+            setTime={setTime}
+            setAlarmTime={setAlarmTime}
+          />
           <TouchableOpacity onPress={handleVisible}>
             <View style={styles.iconView}>
               <Text style={styles.text}>Select a time...</Text>

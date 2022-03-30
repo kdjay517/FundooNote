@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useState, useEffect} from 'react';
 import {firebase} from '@react-native-firebase/firestore';
-
+import PushNotification from 'react-native-push-notification';
 const AuthContext = createContext({});
 const ref = firebase.firestore().collection('UserDetails');
 const AuthProvider = ({children}) => {
@@ -17,7 +17,15 @@ const AuthProvider = ({children}) => {
 
   useEffect(() => {
     fetching();
+    createChannels();
   }, []);
+
+  const createChannels = () => {
+    PushNotification.createChannel({
+      channelId: 'channel-id',
+      channelName: 'My channel',
+    });
+  };
 
   return (
     <AuthContext.Provider

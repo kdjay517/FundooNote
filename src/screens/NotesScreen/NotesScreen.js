@@ -9,6 +9,7 @@ import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import AddReminder from '../../components/Modals/AddReminder';
 import moment from 'moment';
+import LocalNotification from '../../Services/Notifications/LocalNotification';
 import ReminderChip from '../../components/Chip/ReminderChip';
 const NotesScreen = ({navigation}) => {
   const noteData = useRoute().params;
@@ -25,8 +26,14 @@ const NotesScreen = ({navigation}) => {
   const [reminderVisible, setReminderVisible] = useState(false);
   const [modalVisible, setmodalVisible] = useState(false);
   const [repeatReminder, setRepeatReminder] = useState(false);
+  const [reminder, setReminder] = useState('');
+  const [alarm, setAlarm] = useState(noteData?.Reminder || '');
+  const [edit, setEdit] = useState(false);
 
-  const [reminder, setReminder] = useState(noteData?.Reminder || '');
+  console.log(new Date('2023-03-30 9:16'));
+  console.log(alarm);
+  console.log(new Date(alarm));
+  console.log(new Date(moment(alarm, 'YYYY-MM-DD hh:mm')));
 
   const showModal = useCallback(() => {
     setmodalVisible(!modalVisible);
@@ -50,11 +57,13 @@ const NotesScreen = ({navigation}) => {
     setArchive,
     del,
     setDel,
+    reminder,
+    setReminder,
   };
 
   const onBackPress = async () => {
     if (id) {
-      await updateNote(id, title, note, pin, archive, del, labelKeys, reminder);
+      await updateNote(id, title, note, pin, archive, del, labelKeys, alarm);
     } else {
       await writingNoteToFireStore(
         title,
@@ -63,11 +72,17 @@ const NotesScreen = ({navigation}) => {
         archive,
         del,
         labelKeys,
-        reminder,
+        alarm,
       );
       setNote('');
       setTitle('');
     }
+    if (alarm !== null) {
+      // if (alarm > moment().format('YYYY-MM-DD hh:mm')) {
+      LocalNotification(title, note, alarm);
+      // }
+    }
+
     navigation.goBack();
   };
 
@@ -102,7 +117,15 @@ const NotesScreen = ({navigation}) => {
       <View style={{flex: 1, margin: 10}}>
         <Notes {...states} />
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          {reminder?.length ? <ReminderChip reminder={reminder} /> : null}
+          {alarm?.length ? (
+            <ReminderChip
+              alarm={alarm}
+              showModal={showModal}
+              hideModal={hideModal}
+              setEdit={setEdit}
+              edit={edit}
+            />
+          ) : null}
           {labelKeys?.length ? <Chip labels={labels} /> : null}
         </View>
         <AddReminder
@@ -110,6 +133,12 @@ const NotesScreen = ({navigation}) => {
           hideModal={hideModal}
           showRepeaterModal={showRepeaterModal}
           handleReminderSheet={handleReminderSheet}
+          setReminder={setReminder}
+          setAlarm={setAlarm}
+          alarm={alarm}
+          setEdit={setEdit}
+          edit={edit}
+          id={id}
         />
       </View>
       <Bottom
@@ -126,6 +155,9 @@ const NotesScreen = ({navigation}) => {
         hideModal={hideModal}
         setReminder={setReminder}
         setReminerVisible={setReminderVisible}
+        states={states}
+        setAlarm={setAlarm}
+        id={id}
       />
     </SafeAreaView>
   );

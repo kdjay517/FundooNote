@@ -24,6 +24,9 @@ const Bottom = ({
   hideModal,
   setReminder,
   setReminderVisible,
+  states,
+  setAlarm,
+  id,
 }) => {
   const handleLabel = () => {
     toggleBottomNavigationView();
@@ -82,6 +85,9 @@ const Bottom = ({
         showModal={showModal}
         setReminder={setReminder}
         setReminderVisible={setReminderVisible}
+        states={states}
+        setAlarm={setAlarm}
+        id={id}
       />
     </View>
   );

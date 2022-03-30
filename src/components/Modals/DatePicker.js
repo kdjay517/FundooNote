@@ -6,7 +6,14 @@ import {
   widthPercentage,
 } from '../../utility/DynamicDimensions';
 import moment from 'moment';
-const DatePicker = ({visible, setVisible, hideDayModal, setDate}) => {
+const DatePicker = ({
+  visible,
+  setVisible,
+  hideDayModal,
+  setDate,
+  showDayModal,
+  setFullDate,
+}) => {
   const onDismiss = React.useCallback(() => {
     setVisible(false);
     hideDayModal();
@@ -15,8 +22,9 @@ const DatePicker = ({visible, setVisible, hideDayModal, setDate}) => {
   const onChange = React.useCallback(
     ({date}) => {
       setDate(moment(date).format('DD MMMM'));
-      setVisible(false);
+      setFullDate(moment(date).format('YYYY-MM-DD'));
       console.log(date);
+      hideDayModal();
     },
     [setVisible],
   );
@@ -25,16 +33,18 @@ const DatePicker = ({visible, setVisible, hideDayModal, setDate}) => {
 
   return (
     <>
-      <DatePickerModal
-        mode="single"
-        visible={visible}
-        onDismiss={onDismiss}
-        date={date}
-        onConfirm={onChange}
-        saveLabel="Save"
-        label="Select date"
-        animationType="slide"
-      />
+      <Portal>
+        <DatePickerModal
+          mode="single"
+          visible={visible}
+          onDismiss={onDismiss}
+          date={date}
+          onConfirm={onChange}
+          saveLabel="Save"
+          label="Select date"
+          animationType="slide"
+        />
+      </Portal>
     </>
   );
 };

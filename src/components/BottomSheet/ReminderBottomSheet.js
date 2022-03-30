@@ -10,12 +10,14 @@ import {
 import moment from 'moment';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import LocalNotification from '../../Services/Notifications/LocalNotification';
 const ReminderBottomSheet = ({
   reminderVisible,
   handleReminderSheet,
   showModal,
   setReminder,
+  states,
+  id,
 }) => {
   const [fullDay, setFullDay] = useState('');
   const [shortDay, setShortDay] = useState('');
@@ -23,6 +25,7 @@ const ReminderBottomSheet = ({
   const handleTodayTime = () => {
     setReminder('Today, ' + moment().format('hh:mm a'));
     handleReminderSheet();
+    LocalNotification(states.title, states.note);
   };
 
   const handleTomorrowTime = useCallback(() => {

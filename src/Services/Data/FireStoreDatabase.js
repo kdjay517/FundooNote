@@ -52,7 +52,7 @@ const FireStoreDatabase = () => {
     archive,
     del,
     labelKeys,
-    reminder,
+    alarm,
   ) => {
     try {
       if (title !== '' || note !== '') {
@@ -63,7 +63,7 @@ const FireStoreDatabase = () => {
           Archive: archive,
           Delete: del,
           LabelKeys: labelKeys,
-          Reminder: reminder,
+          Reminder: alarm,
         });
       }
     } catch (error) {
@@ -79,7 +79,7 @@ const FireStoreDatabase = () => {
     archive,
     del,
     labelKeys,
-    reminder,
+    alarm,
   ) => {
     try {
       await ref.doc(user).collection('Notes').doc(id).update({
@@ -89,7 +89,7 @@ const FireStoreDatabase = () => {
         Archive: archive,
         Delete: del,
         LabelKey: labelKeys,
-        Reminder: reminder,
+        Reminder: alarm,
       });
     } catch (error) {
       console.log(error);

@@ -16,21 +16,31 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DatePicker from './DatePicker';
 import moment from 'moment';
 
-const SelectDay = ({dayModal, hideDayModal, setDate}) => {
+const SelectDay = ({
+  dayModal,
+  hideDayModal,
+  setDate,
+  showDayModal,
+  setFullDay,
+  setFullDate,
+}) => {
   const [visible, setVisible] = React.useState(false);
 
   const handleTodayDate = useCallback(() => {
     setDate(moment().format('DD MMMM'));
+    setFullDate(moment().format('YYYY-MM-DD'));
     hideDayModal();
   });
 
   const handleTomorrowDate = useCallback(() => {
     setDate(moment().add(1, 'days').format('DD MMMM'));
+    setFullDay(moment().add(1, 'days').format('DD MM YYYY'));
     hideDayModal();
   });
 
   const handleNextWeek = useCallback(() => {
     setDate(moment().add(7, 'days').format('DD MMMM'));
+    setFullDay(moment().add(1, 'days').format('DD MM YYYY'));
     hideDayModal();
   });
   const handleVisible = useCallback(() => {
@@ -71,6 +81,8 @@ const SelectDay = ({dayModal, hideDayModal, setDate}) => {
             setVisible={setVisible}
             hideDayModal={hideDayModal}
             setDate={setDate}
+            showDayModal={showDayModal}
+            setFullDate={setFullDate}
           />
           <TouchableOpacity onPress={handleVisible}>
             <View style={styles.iconView}>

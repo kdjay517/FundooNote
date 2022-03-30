@@ -4,17 +4,27 @@ import {TimePickerModal} from 'react-native-paper-dates';
 import {Modal, Portal} from 'react-native-paper';
 import moment from 'moment';
 
-const TimePicker = ({visible, setVisible}) => {
+const TimePicker = ({
+  visible,
+  setVisible,
+  hideTimeModal,
+  setTime,
+  setAlarmTime,
+}) => {
   const onDismiss = React.useCallback(() => {
     setVisible(false);
   }, [setVisible]);
 
   const onConfirm = React.useCallback(
     ({hours, minutes}) => {
+      setAlarmTime(moment().hours(hours).minutes(minutes).format('hh:mm '));
+      setTime(moment().hours(hours).minutes(minutes).format('hh:mm a'));
       setVisible(false);
     },
     [setVisible],
   );
+
+  const date = new Date();
 
   return (
     <>
@@ -22,8 +32,8 @@ const TimePicker = ({visible, setVisible}) => {
         visible={visible}
         onDismiss={onDismiss}
         onConfirm={onConfirm}
-        hours={12} // default: current hours
-        minutes={0} // default: current minutes
+        hours={moment().hour()} // default: current hours
+        minutes={moment().minutes()} // default: current minutes
         label="Select time" // optional, default 'Select time'
         cancelLabel="Cancel" // optional, default: 'Cancel'
         confirmLabel="Ok" // optional, default: 'Ok'

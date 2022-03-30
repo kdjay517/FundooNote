@@ -1,18 +1,27 @@
+import {truncate} from 'lodash-es';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   heightPercentage,
   widthPercentage,
 } from '../../utility/DynamicDimensions';
-const ReminderChip = ({reminder}) => {
-  return reminder?.length ? (
-    <View style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
-        <Icon name={'alarm'} size={24} color="black" />
-        <Text style={styles.text}>{reminder}</Text>
-      </View>
-    </View>
+const ReminderChip = ({reminder, showModal, alarm, setEdit}) => {
+  const handleReminderChip = () => {
+    setEdit(true);
+    showModal();
+  };
+  return alarm?.length ? (
+    <>
+      <TouchableOpacity onPress={handleReminderChip}>
+        <View style={styles.container}>
+          <View style={{flexDirection: 'row'}}>
+            <Icon name={'alarm'} size={24} color="black" />
+            <Text style={styles.text}>{alarm}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </>
   ) : null;
 };
 
